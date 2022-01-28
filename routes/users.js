@@ -7,6 +7,14 @@ router.get('/', async (req, res) => {
     select: {
       id: true,
       username: true,
+      cars: {
+        select: {
+          id: true,
+          brand: true,
+          model: true,
+          plate: true,
+        },
+      },
     },
   });
 

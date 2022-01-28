@@ -16,4 +16,14 @@ model User {
   password  String   @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  cars      Car[]
+}
+
+model Car {
+  id     String @id @default(uuid())
+  brand  String @db.VarChar(255)
+  model  String @db.VarChar(255)
+  plate  String @unique @db.VarChar(10)
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
