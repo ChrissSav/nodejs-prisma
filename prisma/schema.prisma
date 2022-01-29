@@ -25,5 +25,5 @@ model Car {
   model  String @db.VarChar(255)
   plate  String @unique @db.VarChar(10)
   user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  userId String
 }
