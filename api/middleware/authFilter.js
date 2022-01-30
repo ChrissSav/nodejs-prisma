@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
+const { checkUserById } = require('../services/AuthService');
 const constans = require('../utils/constans');
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -11,7 +12,6 @@ module.exports = async (req, res, next) => {
   }
 
   const token = req.header(constans.JWT_HEADER);
-  // CHECK IF WE EVEN HAVE A TOKEN
 
   if (!token) {
     res.status(401).json({
@@ -21,7 +21,23 @@ module.exports = async (req, res, next) => {
   }
 
   try {
-    const user = await jwt.verify(token, JWT_SECRET);
+    /*
+     * Check if user's token is valid and user exist in db
+     */
+    const verifyUser = await jwt.verify(token, JWT_SECRET);
+
+    /*
+     * Check if user exist in db
+     */
+    const user = await checkUserById(verifyUser.id);
+
+    if (user == null) {
+      res.status(401).json({
+        msg: 'User not valid',
+      });
+      return;
+    }
+
     req.currentUserId = user.id;
     next();
   } catch (error) {

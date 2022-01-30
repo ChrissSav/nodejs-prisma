@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { check, validationResult } = require('express-validator');
 const constans = require('../utils/constans');
-const { registerUser, loginUser } = require('../services/UserService');
+const { registerUser, loginUser } = require('../services/AuthService');
 
 router.post('/signup', [check('username').isEmail(), check('password').isLength({ min: 4 })], async (req, res) => {
   const { username, password } = req.body;
