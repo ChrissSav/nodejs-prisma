@@ -4,7 +4,7 @@ require('dotenv').config();
 
 app.use(express.json());
 
-app.use(require('./api/middleware/authFilter'));
+app.use(require('./api/middleware/AuthFilter'));
 
 app.use('/api/auth', require('./api/controllers/AuthConteroller'));
 app.use('/api/users', require('./api/controllers/UserController'));
